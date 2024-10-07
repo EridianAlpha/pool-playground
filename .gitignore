@@ -1,0 +1,27 @@
+# Compiler files
+cache/
+out/
+lib/
+
+# Ignores development broadcast logs
+broadcast/
+broadcast/*
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Dotenv file
+.env
+
+# Foundry Files
+docs/
+.gas-snapshot
+lcov.info
+coverage-report.txt
+report.md
+
+# Custom Foundry Files
+MAKE_CLI_INPUT_VALUE.tmp
+
+# Mac OS Files
+.DS_Store

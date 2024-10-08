@@ -55,9 +55,11 @@ contract PoolPlayground {
 
     // Constant and immutable variables
     uint256 public constant TOKEN_DECIMALS = 10 ** 18;
+    TokenAmounts public MARKET_PRICE_USD = TokenAmounts({diamond: 100, wood: 20, stone: 2});
 
     // Mappings
     mapping(address => TokenAddresses) internal s_userTokens;
+    mapping(address => TokenAmounts) internal s_userInitialTokenBalances;
     mapping(string => address) internal s_contractAddresses;
 
     // ================================================================
@@ -78,6 +80,9 @@ contract PoolPlayground {
     /// @param _userTokenAmounts The amount of tokens to mint for the user.
     /// @param _poolTokenAmounts The amount of tokens to add to the Uniswap pools.
     function deploy(TokenAmounts calldata _userTokenAmounts, TokenAmounts[] calldata _poolTokenAmounts) public {
+        // Store initial token balances for the user so profit can be calculated
+        s_userInitialTokenBalances[msg.sender] = _userTokenAmounts;
+
         // Calculate the total amount of tokens to mint
         TokenAmounts memory tokenMintAmounts = TokenAmounts({
             diamond: (_userTokenAmounts.diamond + _poolTokenAmounts[0].diamond + _poolTokenAmounts[1].diamond),
@@ -209,5 +214,27 @@ contract PoolPlayground {
     /// @param _user The address of the user.
     function getUserTokens(address _user) public view returns (TokenAddresses memory) {
         return s_userTokens[_user];
+    }
+
+    /// @notice Get the all the token balances for a user.
+    /// @param _user The address of the user.
+    /// @return userTokenBalances The token balances for the user.
+    function getUserTokenBalances(address _user) public view returns (TokenAmounts memory userTokenBalances) {
+        TokenAddresses memory userTokenAddresses = s_userTokens[_user];
+
+        userTokenBalances.diamond = Token(userTokenAddresses.diamond).balanceOf(_user);
+        userTokenBalances.wood = Token(userTokenAddresses.wood).balanceOf(_user);
+        userTokenBalances.stone = Token(userTokenAddresses.stone).balanceOf(_user);
+    }
+
+    /// @notice Get the initial token balances for a user.
+    /// @param _user The address of the user.
+    /// @return userInitialTokenBalances The initial token balances for the user.
+    function getUserInitialTokenBalances(address _user)
+        public
+        view
+        returns (TokenAmounts memory userInitialTokenBalances)
+    {
+        return s_userInitialTokenBalances[_user];
     }
 }

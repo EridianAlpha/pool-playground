@@ -10,9 +10,9 @@
 [submodule "lib/v2-core"]
 	path = lib/v2-core
 	url = https://github.com/uniswap/v2-core
-[submodule "lib/v2-periphery"]
-	path = lib/v2-periphery
-	url = https://github.com/uniswap/v2-periphery
 [submodule "lib/swap-router-contracts"]
 	path = lib/swap-router-contracts
 	url = https://github.com/uniswap/swap-router-contracts
+[submodule "lib/uniswap-lib"]
+	path = lib/uniswap-lib
+	url = https://github.com/uniswap/uniswap-lib

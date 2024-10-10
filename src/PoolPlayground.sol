@@ -18,8 +18,8 @@ import {Token} from "./Token.sol";
 
 /// @title Pool Playground
 /// @author EridianAlpha
-/// @notice An interactive educational playground for visualizing and understanding
-///         Uniswap V2 mechanics by swapping ERC20 tokens deployed on a testnet.
+/// @notice An interactive educational playground for visualizing and learning
+///         Uniswap V2 mechanics by swapping testnet ERC20 tokens.
 contract PoolPlayground {
     // ================================================================
     // │                            STRUCTS                           │
@@ -69,7 +69,7 @@ contract PoolPlayground {
     /// @notice Constructor to set the Uniswap contract addresses for the network.
     /// @param _contractAddresses An array of ContractAddress structs.
     constructor(ContractAddress[] memory _contractAddresses) {
-        // Convert the contractAddresses array to a mapping.
+        // Convert the contractAddresses array to a mapping
         for (uint256 i = 0; i < _contractAddresses.length; i++) {
             s_contractAddresses[_contractAddresses[i].identifier] = _contractAddresses[i].contractAddress;
         }
@@ -108,10 +108,14 @@ contract PoolPlayground {
         internal
         returns (TokenAddresses memory tokenAddresses)
     {
-        // Create new tokens with initial supply minted to this contract.
-        Token diamond = new Token(_mintTokenAmounts.diamond, "Diamond", "DIAMOND");
-        Token wood = new Token(_mintTokenAmounts.wood, "Wood", "WOOD");
-        Token stone = new Token(_mintTokenAmounts.stone, "Stone", "STONE");
+        // Set pre-approved addresses for unlimited token spending
+        address[] memory preApprovedAddresses = new address[](1);
+        preApprovedAddresses[0] = s_contractAddresses["uniswapV2Router"];
+
+        // Create new tokens with initial supply minted to this contract
+        Token diamond = new Token(_mintTokenAmounts.diamond, "Diamond", "DIAMOND", preApprovedAddresses);
+        Token wood = new Token(_mintTokenAmounts.wood, "Wood", "WOOD", preApprovedAddresses);
+        Token stone = new Token(_mintTokenAmounts.stone, "Stone", "STONE", preApprovedAddresses);
 
         // Store the token addresses for the user
         tokenAddresses = TokenAddresses(address(diamond), address(wood), address(stone));

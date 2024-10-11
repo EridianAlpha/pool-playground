@@ -52,7 +52,7 @@ contract Interactions is GetDeployedContract {
         poolTokenAmounts[1] =
             PoolPlayground.TokenAmounts({diamond: 10 * TOKEN_DECIMALS, wood: 0, stone: 100 * TOKEN_DECIMALS});
         poolTokenAmounts[2] =
-            PoolPlayground.TokenAmounts({diamond: 0, wood: 100 * TOKEN_DECIMALS, stone: 100 * TOKEN_DECIMALS});
+            PoolPlayground.TokenAmounts({diamond: 0, wood: 20 * TOKEN_DECIMALS, stone: 200 * TOKEN_DECIMALS});
 
         // Deploy the playground instance
         poolPlayground.deploy(userTokenAmounts, poolTokenAmounts);

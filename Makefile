@@ -186,18 +186,33 @@ deploy: get-network-args \
 # │                RUN COMMANDS - UNISWAPV2 DEPLOYMENT           │
 # ================================================================
 
-deploy-uniswapV2Factory-script:
-	@DEPLOYED_FACTORY_HELPER_ADDR=$$(forge create script/uniswapV2/CreateUniswapV2FactoryHelper.s.sol:CreateUniswapV2FactoryHelper $(NETWORK_ARGS) --json | jq -r '.deployedTo'); \
-	\
-	DEPLOYED_UNISWAPV2_FACTORY_ADDR=$$(forge script script/uniswapV2/DeployUniswapV2Factory.s.sol:DeployUniswapV2Factory --sig "run(address)" $$DEPLOYED_FACTORY_HELPER_ADDR $(NETWORK_ARGS) -vvvv --broadcast | grep "== Return ==" -A 1 | tail -n 1 | awk '{ print $$3 }'); \
+deploy-uniswapV2-script:
+	@echo "Deploying UniswapV2Factory..."; \
+	DEPLOYED_UNISWAPV2_FACTORY_ADDR=$$(forge create lib/v2-core/contracts/UniswapV2Factory.sol:UniswapV2Factory --constructor-args 0x0000000000000000000000000000000000000000 $(NETWORK_ARGS) --json | jq -r '.deployedTo'); \
 	echo "Deployed UniswapV2Factory at: $$DEPLOYED_UNISWAPV2_FACTORY_ADDR"; \
 	\
-	DEPLOYED_ROUTER_HELPER_ADDR=$$(forge create script/uniswapV2/CreateUniswapV2Router02Helper.s.sol:CreateUniswapV2Router02Helper $(NETWORK_ARGS) --json | jq -r '.deployedTo'); \
+	echo ""; \
+	echo "Deploying UniswapV2Router02..."; \
+	DEPLOYED_UNISWAPV2_ROUTER02_ADDR=$$(forge create lib/v2-periphery/contracts/UniswapV2Router02.sol:UniswapV2Router02 --constructor-args $$DEPLOYED_UNISWAPV2_FACTORY_ADDR 0x0000000000000000000000000000000000000000 $(NETWORK_ARGS) --json | jq -r '.deployedTo'); \
+	echo "Deployed UniswapV2Router02 at: $$DEPLOYED_UNISWAPV2_ROUTER02_ADDR"; \
 	\
-	DEPLOYED_UNISWAPV2_ROUTER_ADDR=$$(forge script script/uniswapV2/DeployUniswapV2Router02.s.sol:DeployUniswapV2Router02 --sig "run(address, address)" $$DEPLOYED_ROUTER_HELPER_ADDR $$DEPLOYED_UNISWAPV2_FACTORY_ADDR $(NETWORK_ARGS) -vvvv --broadcast | grep "== Return ==" -A 1 | tail -n 1 | awk '{ print $$3 }'); \
-	echo "Deployed UniswapV2Router02 at: $$DEPLOYED_UNISWAPV2_ROUTER_ADDR"; \
+	if [ ! -z "$(VERIFY_ARGS)" ]; then \
+		echo ""; \
+		echo "Verifying UniswapV2Factory..."; \
+		forge verify-contract $$DEPLOYED_UNISWAPV2_FACTORY_ADDR lib/v2-core/contracts/UniswapV2Factory.sol:UniswapV2Factory --constructor-args 0x0000000000000000000000000000000000000000000000000000000000000000 --compiler-version 0.5.16 --watch --flatten $(VERIFY_ARGS); \
+		\
+		echo ""; \
+		echo "Verifying UniswapV2Router02..."; \
+		ENCODED_CONSTRUCTOR_ARGS=$$(cast abi-encode "constructor(address,address)" $$DEPLOYED_UNISWAPV2_FACTORY_ADDR 0x0000000000000000000000000000000000000000); \
+		forge verify-contract $$DEPLOYED_UNISWAPV2_ROUTER02_ADDR lib/v2-periphery/contracts/UniswapV2Router02.sol:UniswapV2Router02 --constructor-args $$ENCODED_CONSTRUCTOR_ARGS --compiler-version 0.6.6 --watch --flatten $(VERIFY_ARGS); \
+	fi
 
-deploy-uniswapV2Factory-anvil:; @$(MAKE) deploy-uniswapV2Factory-script NETWORK_ARGS="$(ANVIL_NETWORK_ARGS)"
+deploy-uniswapV2-anvil:; @$(MAKE) deploy-uniswapV2-script NETWORK_ARGS="$(ANVIL_NETWORK_ARGS)"
+deploy-uniswapV2-ethereum-holesky:; @$(MAKE) deploy-uniswapV2-script NETWORK_ARGS="$(ETHEREUM_HOLESKY_NETWORK_ARGS)" VERIFY_ARGS="--chain-id 17000 --etherscan-api-key ${ETHERSCAN_API_KEY}"
+deploy-uniswapV2-ethereum-sepolia:; @$(MAKE) deploy-uniswapV2-script NETWORK_ARGS="$(ETHEREUM_SEPOLIA_NETWORK_ARGS)" VERIFY_ARGS="--chain-id 11155111 --etherscan-api-key ${ETHERSCAN_API_KEY}"
+deploy-uniswapV2-base-sepolia:; @$(MAKE) deploy-uniswapV2-script NETWORK_ARGS="$(BASE_SEPOLIA_NETWORK_ARGS)" VERIFY_ARGS="--chain-id 84532 --etherscan-api-key ${BASESCAN_API_KEY}"
+deploy-uniswapV2-arbitrum-sepolia:; @$(MAKE) deploy-uniswapV2-script NETWORK_ARGS="$(ARBITRUM_SEPOLIA_NETWORK_ARGS)" VERIFY_ARGS="--chain-id 421614 --etherscan-api-key ${ARBISCAN_API_KEY}"
+deploy-uniswapV2-optimism-sepolia:; @$(MAKE) deploy-uniswapV2-script NETWORK_ARGS="$(OPTIMISM_SEPOLIA_NETWORK_ARGS)" VERIFY_ARGS="--chain-id 11155420 --etherscan-api-key ${OPSCAN_API_KEY}"
 
 # ================================================================
 # │            RUN COMMANDS - DEPLOY PLAYGROUND INSTANCE         │

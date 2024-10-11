@@ -21,16 +21,28 @@ contract HelperConfig is Script {
 
         if (chainId == 1 || chainId == 31337) {
             // Mainnet (Used for forks only)
-            uniswapV2RouterAddress = vm.envAddress("MAINNET_ADDRESS_UNISWAP_V2_ROUTER");
-            uniswapV2FactoryAddress = vm.envAddress("MAINNET_ADDRESS_UNISWAP_V2_FACTORY");
-        } else if (chainId == 11155111 || chainId == 31338) {
-            // Sepolia
-            uniswapV2RouterAddress = vm.envAddress("SEPOLIA_ADDRESS_UNISWAP_V2_ROUTER");
-            uniswapV2FactoryAddress = vm.envAddress("SEPOLIA_ADDRESS_UNISWAP_V2_FACTORY");
-        } else if (chainId == 84532 || chainId == 31339) {
+            uniswapV2RouterAddress = vm.envAddress("ETHEREUM_MAINNET_ADDRESS_UNISWAP_V2_ROUTER");
+            uniswapV2FactoryAddress = vm.envAddress("ETHEREUM_MAINNET_ADDRESS_UNISWAP_V2_FACTORY");
+        } else if (chainId == 17000 || chainId == 31338) {
+            // Ethereum Holesky
+            uniswapV2RouterAddress = vm.envAddress("ETHEREUM_HOLESKY_ADDRESS_UNISWAP_V2_ROUTER");
+            uniswapV2FactoryAddress = vm.envAddress("ETHEREUM_HOLESKY_ADDRESS_UNISWAP_V2_FACTORY");
+        } else if (chainId == 11155111 || chainId == 31339) {
+            // Ethereum Sepolia
+            uniswapV2RouterAddress = vm.envAddress("ETHEREUM_SEPOLIA_ADDRESS_UNISWAP_V2_ROUTER");
+            uniswapV2FactoryAddress = vm.envAddress("ETHEREUM_SEPOLIA_ADDRESS_UNISWAP_V2_FACTORY");
+        } else if (chainId == 84532 || chainId == 31340) {
             // Base Sepolia
             uniswapV2RouterAddress = vm.envAddress("BASE_SEPOLIA_ADDRESS_UNISWAP_V2_ROUTER");
             uniswapV2FactoryAddress = vm.envAddress("BASE_SEPOLIA_ADDRESS_UNISWAP_V2_FACTORY");
+        } else if (chainId == 421614 || chainId == 31341) {
+            // Arbitrum Sepolia
+            uniswapV2RouterAddress = vm.envAddress("ARBITRUM_SEPOLIA_ADDRESS_UNISWAP_V2_ROUTER");
+            uniswapV2FactoryAddress = vm.envAddress("ARBITRUM_SEPOLIA_ADDRESS_UNISWAP_V2_FACTORY");
+        } else if (chainId == 11155420 || chainId == 31342) {
+            // Optimism Sepolia
+            uniswapV2RouterAddress = vm.envAddress("OPTIMISM_SEPOLIA_ADDRESS_UNISWAP_V2_ROUTER");
+            uniswapV2FactoryAddress = vm.envAddress("OPTIMISM_SEPOLIA_ADDRESS_UNISWAP_V2_FACTORY");
         } else {
             revert(string(abi.encodePacked("Chain not supported: ", Strings.toString(block.chainid))));
         }

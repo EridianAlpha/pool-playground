@@ -13,11 +13,13 @@
 
 ## 1. Overview
 
-🏗️ UNDER DEVELOPMENT 🏗️
+An interactive educational playground for visualizing and learning Uniswap V2 mechanics by swapping testnet ERC20 tokens.
 
-A project for testing and visualizing Uniswap pools.
+Live on [https://pool.eridian.xyz](https://pool.eridian.xyz)
 
-## 2. Clone repository
+## 2. Installation
+
+## 2.1. Clone repository
 
 ```bash
 git clone https://github.com/EridianAlpha/pool-playground.git
@@ -64,14 +66,28 @@ make coverage-report-fork
 
 ## 4. Deployment
 
+Fork the Uniswap v2-periphery repository and modify the UniswapV2Library.sol contract with the correct init code hash.
+
+```bash
+
+CREATION_BYTECODE=$(forge inspect UniswapV2Pair bytecode)
+cast keccak "$CREATION_BYTECODE"
+
+# Remove the 0x from the start and use that as the "init code hash" in UniswapV2Library.sol
+0be7e5aaf721ce53efd2148867ffca974ca93687937cd12b66ab2acef87168ed
+
+```
+
 Deploys PoolPlayground to the specified chain.
 
-| Chain        | Command                    |
-| ------------ | -------------------------- |
-| Anvil        | `make deploy anvil`        |
-| Sepolia      | `make deploy sepolia`      |
-| Base Sepolia | `make deploy base-sepolia` |
-| Base Mainnet | `make deploy base-mainnet` |
+| Chain            | Command                        |
+| ---------------- | ------------------------------ |
+| Anvil            | `make deploy anvil`            |
+| Holesky          | `make deploy ethereum-holesky` |
+| Sepolia          | `make deploy ethereum-sepolia` |
+| Base Sepolia     | `make deploy base-sepolia`     |
+| Arbitrum Sepolia | `make deploy arbitrum-sepolia` |
+| Optimism Sepolia | `make deploy optimism-sepolia` |
 
 ## 5. Interactions
 

@@ -16,3 +16,6 @@
 [submodule "lib/uniswap-lib"]
 	path = lib/uniswap-lib
 	url = https://github.com/uniswap/uniswap-lib
+[submodule "lib/v2-periphery"]
+	path = lib/v2-periphery
+	url = https://github.com/EridianAlpha/v2-periphery

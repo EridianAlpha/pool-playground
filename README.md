@@ -2,22 +2,22 @@
 
 - [1. Overview](#1-overview)
 - [2. Installation](#2-installation)
-- [3. Clone repository](#3-clone-repository)
-  - [3.1. Install Dependencies](#31-install-dependencies)
-  - [3.2. Create the `.env` file](#32-create-the-env-file)
-- [4. Testing](#4-testing)
-  - [4.1. Tests](#41-tests)
-  - [4.2. Coverage](#42-coverage)
-- [5. Deployment](#5-deployment)
-  - [5.1. Deploying Uniswap V2 Contracts (optional)](#51-deploying-uniswap-v2-contracts-optional)
-  - [5.2. Deploying PoolPlayground Contract](#52-deploying-poolplayground-contract)
-- [6. Interactions](#6-interactions)
-  - [6.1. Deploy Playground Instance](#61-deploy-playground-instance)
-- [7. Bugs and Feature Requests](#7-bugs-and-feature-requests)
-  - [7.1. Bugs](#71-bugs)
-  - [7.2. Feature Requests](#72-feature-requests)
-- [8. Authors](#8-authors)
-- [9. License](#9-license)
+  - [2.1. Clone repository](#21-clone-repository)
+  - [2.2. Install Dependencies](#22-install-dependencies)
+  - [2.3. Create the `.env` file](#23-create-the-env-file)
+- [3. Testing](#3-testing)
+  - [3.1. Tests](#31-tests)
+  - [3.2. Coverage](#32-coverage)
+- [4. Deployment](#4-deployment)
+  - [4.1. Deploying Uniswap V2 Contracts (optional)](#41-deploying-uniswap-v2-contracts-optional)
+  - [4.2. Deploying PoolPlayground Contract](#42-deploying-poolplayground-contract)
+- [5. Interactions](#5-interactions)
+  - [5.1. Deploy Playground Instance](#51-deploy-playground-instance)
+- [6. Bugs and Feature Requests](#6-bugs-and-feature-requests)
+  - [6.1. Bugs](#61-bugs)
+  - [6.2. Feature Requests](#62-feature-requests)
+- [7. Authors](#7-authors)
+- [8. License](#8-license)
 
 ## 1. Overview
 
@@ -29,13 +29,13 @@ Live on [https://pool.eridian.xyz](https://pool.eridian.xyz)
 
 ## 2. Installation
 
-## 3. Clone repository
+### 2.1. Clone repository
 
 ```bash
 git clone https://github.com/EridianAlpha/pool-playground.git
 ```
 
-### 3.1. Install Dependencies
+### 2.2. Install Dependencies
 
 This should happen automatically when first running a command, but the installation can be manually triggered with the following commands:
 
@@ -45,13 +45,13 @@ git submodule update
 make install
 ```
 
-### 3.2. Create the `.env` file
+### 2.3. Create the `.env` file
 
 Use the `.env.example` file as a template to create a `.env` file.
 
-## 4. Testing
+## 3. Testing
 
-### 4.1. Tests
+### 3.1. Tests
 
 ```bash
 make test
@@ -64,7 +64,7 @@ make test-summary
 make test-summary-fork
 ```
 
-### 4.2. Coverage
+### 3.2. Coverage
 
 ```bash
 make coverage
@@ -74,9 +74,9 @@ make coverage-report
 make coverage-report-fork
 ```
 
-## 5. Deployment
+## 4. Deployment
 
-### 5.1. Deploying Uniswap V2 Contracts (optional)
+### 4.1. Deploying Uniswap V2 Contracts (optional)
 
 This step is optional and only necessary if you need to deploy the Uniswap V2 core contracts to a new chain. The Uniswap V2 core contracts have already been deployed on Mainnet (used for forks only), Holesky, Sepolia, Base Sepolia, Arbitrum Sepolia, and Optimism Sepolia chains. The addresses of these existing deployments can be found in the `.env.example` file.
 
@@ -116,7 +116,7 @@ After installing the modified Uniswap v2-periphery repository, you can deploy th
 | Arbitrum Sepolia | `make deploy-uniswapV2-arbitrum-sepolia` |
 | Optimism Sepolia | `make deploy-uniswapV2-optimism-sepolia` |
 
-### 5.2. Deploying PoolPlayground Contract
+### 4.2. Deploying PoolPlayground Contract
 
 Deploys PoolPlayground to the specified chain.
 
@@ -129,14 +129,14 @@ Deploys PoolPlayground to the specified chain.
 | Arbitrum Sepolia | `make deploy arbitrum-sepolia` |
 | Optimism Sepolia | `make deploy optimism-sepolia` |
 
-## 6. Interactions
+## 5. Interactions
 
 Interactions are defined in `./script/Interactions.s.sol`
 
 If `DEPLOYED_CONTRACT_ADDRESS` is set in the `.env` file, that contract address will be used for interactions.
 If that variable is not set, the latest deployment on the specified chain will be used.
 
-### 6.1. Deploy Playground Instance
+### 5.1. Deploy Playground Instance
 
 Call the `deploy()` function on the PoolPlayground contract.
 The input parameters are defined in the `Interactions.s.sol` script.
@@ -150,11 +150,11 @@ The input parameters are defined in the `Interactions.s.sol` script.
 | Arbitrum Sepolia | `make deployPlaygroundInstance arbitrum-sepolia` |
 | Optimism Sepolia | `make deployPlaygroundInstance optimism-sepolia` |
 
-## 7. Bugs and Feature Requests
+## 6. Bugs and Feature Requests
 
 If you encounter any bugs or have a feature request, please open an issue on GitHub. To help us resolve the issue, please provide the following information:
 
-### 7.1. Bugs
+### 6.1. Bugs
 
 - A detailed description of the bug.
 - Steps to reproduce the bug.
@@ -162,15 +162,15 @@ If you encounter any bugs or have a feature request, please open an issue on Git
 - Screenshots, if possible, and any additional context or information that may help us resolve the bug.
 - If you have a solution, suggestion, or code change, please submit a pull request.
 
-### 7.2. Feature Requests
+### 6.2. Feature Requests
 
 - For feature requests, questions, or feedback, please open an issue.
 - For security issues or general inquiries, please contact [Eridian](https://eridian.xyz) privately.
 
-## 8. Authors
+## 7. Authors
 
 - [Eridian](https://eridian.xyz)
 
-## 9. License
+## 8. License
 
 [MIT](https://choosealicense.com/licenses/mit/)

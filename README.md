@@ -13,11 +13,17 @@
   - [5.2. Deploying PoolPlayground Contract](#52-deploying-poolplayground-contract)
 - [6. Interactions](#6-interactions)
   - [6.1. Deploy Playground Instance](#61-deploy-playground-instance)
-- [7. License](#7-license)
+- [7. Bugs and Feature Requests](#7-bugs-and-feature-requests)
+  - [7.1. Bugs](#71-bugs)
+  - [7.2. Feature Requests](#72-feature-requests)
+- [8. Authors](#8-authors)
+- [9. License](#9-license)
 
 ## 1. Overview
 
 An interactive educational playground for visualizing and learning Uniswap V2 mechanics by swapping testnet ERC20 tokens.
+
+Learn all about Pool Playground [here](https://pool.eridian.xyz/#about).
 
 Live on [https://pool.eridian.xyz](https://pool.eridian.xyz)
 
@@ -144,6 +150,27 @@ The input parameters are defined in the `Interactions.s.sol` script.
 | Arbitrum Sepolia | `make deployPlaygroundInstance arbitrum-sepolia` |
 | Optimism Sepolia | `make deployPlaygroundInstance optimism-sepolia` |
 
-## 7. License
+## 7. Bugs and Feature Requests
+
+If you encounter any bugs or have a feature request, please open an issue on GitHub. To help us resolve the issue, please provide the following information:
+
+### 7.1. Bugs
+
+- A detailed description of the bug.
+- Steps to reproduce the bug.
+- Expected behavior and actual behavior.
+- Screenshots, if possible, and any additional context or information that may help us resolve the bug.
+- If you have a solution, suggestion, or code change, please submit a pull request.
+
+### 7.2. Feature Requests
+
+- For feature requests, questions, or feedback, please open an issue.
+- For security issues or general inquiries, please contact [Eridian](https://eridian.xyz) privately.
+
+## 8. Authors
+
+- [Eridian](https://eridian.xyz)
+
+## 9. License
 
 [MIT](https://choosealicense.com/licenses/mit/)
